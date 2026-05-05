@@ -9,5 +9,10 @@ project/
 ├── src/
 │   └── main.c
 ├── bin/
+├── db/
+│   └── users.txt
+├── .gitignore
 ├── Makefile
+├── Projecto_PPP_2025_26.pdf
+├── readme.md
 └── run.sh
