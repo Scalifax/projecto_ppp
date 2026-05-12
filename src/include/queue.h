@@ -1,0 +1,9 @@
+#ifndef __QUEUE_H__
+#define __QUEUE_H__
+
+#include <stdio.h>
+#include "data.h"
+
+void new_student(student_queue_t* q, student_t s);
+
+#endif
