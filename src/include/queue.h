@@ -5,5 +5,6 @@
 #include "data.h"
 
 void new_student(student_queue_t* q, student_t s);
+void remove_student(student_queue_t* q, const char* student_name);
 
 #endif

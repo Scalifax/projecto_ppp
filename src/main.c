@@ -57,6 +57,12 @@ void str_to_float(const char *str, float *result)
     *result = num * sign;
 }
 
+void clean_args(char** args)
+{
+    for(int i = 0; i < MAX_ARGS; i++)
+        args[i] = NULL;
+}
+
 int main()
 {
     // Carrega os estudantes que estão no banco de dados.
@@ -92,6 +98,15 @@ int main()
         if(!strcmp(args[0], "add")){
             // Código para criar um novo estudante na fila.
             // Cria uma nova estrutra de estudante e copia os argumentos.
+
+            // Verifica se os argumentos não são vazios.
+            if(!args[1] || !args[2] || !args[3] || !args[4] || !args[5] || !args[6])
+            {
+                printf("Erro: faltam argumentos para o comando 'add'\n");
+                clean_args(args);
+                continue;
+            }
+
             student_t s;
             strcpy(s.name, args[1]);
             strcpy(s.birth, args[2]);
@@ -107,6 +122,7 @@ int main()
         }
         else if(!strcmp(args[0], "list")){
             // Código para exibir todos os estudantes da fila.
+            // TODO: DEVE SER POR ORDEM ALFABÉTICA --------------------------------------------------------------------------
             printf("Fila atual de estudante:\n");
             student_node_t* node_c = student_queue.init;
             while(node_c != NULL)
@@ -117,7 +133,18 @@ int main()
             }
         }
         else if(!strcmp(args[0], "remove")){
-            // TODO
+            // Código para remover um estudante da fila
+            
+            // Verifica se o argumento não é vazios.
+            if(!args[1])
+            {
+                printf("Erro: faltam argumentos para o comando 'add'\n");
+                clean_args(args);
+                continue;
+            }
+
+            // Chama a função de remover o estudante.
+            remove_student(&student_queue, args[1]);
         }
         else if(!strcmp(args[0], "purchase")){
             // TODO
@@ -132,6 +159,9 @@ int main()
         else{
             printf("Comando desconhecido.\n");
         }
+
+        // Limpa os argumentos para o próximo loop.
+        clean_args(args);
     }
 
     return 0;

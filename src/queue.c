@@ -25,3 +25,26 @@ void new_student(student_queue_t* q, student_t s)
         node_c->prox = node_p;
     }
 }
+
+void remove_student(student_queue_t* q, const char* student_name)
+{
+    if(q == NULL) return;
+
+    student_node_t* node_o = NULL;
+    student_node_t* node_c = q->init;
+    while(strcmp(node_c->student.name, student_name) != 0)
+    {
+        // Passa pro próximo elemento da fila.
+        // Se for o último elemento retorna.
+        if(node_c->prox != NULL){
+            node_o = node_c;
+            node_c = node_c->prox;
+        }
+        else{
+            printf("Estudante não encontrado\n");
+            return;
+        }
+    }
+    node_o->prox = node_c->prox;
+    free(node_c);
+}
