@@ -39,14 +39,16 @@ void str_to_float(const char *str, float *result)
             continue;
         }
 
-        // Verifica se é dígito
+        // Verifica se é dígito.
         if(str[i] < '0' || str[i] > '9') return;
 
         int digit = str[i] - '0';
-        if(!has_decimal){ // Parte inteira
+        if(!has_decimal){
+            // Parte inteira
             num = num * 10.0f + digit;
         } 
-        else{ // Parte decimal
+        else{ 
+            // Parte decimal
             num += digit * decimal_factor;
             decimal_factor *= 0.1f;
         }
@@ -70,7 +72,7 @@ int main()
 
     char cmd[128];          // Buffer para guardar o comando digitado.
     char* args[MAX_ARGS];   // Array de ponteiros para os argumentos do comando.
-    printf("Comandos disponíveis (add, remove, purchase, deposit)\n");
+    printf("Comandos disponíveis (add, list, remove, purchase, deposit, exit)\n");
 
     // Loop Principal.
     while(1)
@@ -83,6 +85,8 @@ int main()
         }
         cmd[strcspn(cmd, "\n")] = '\0'; // Remove o '\n' do fgets
         
+        if(cmd[0] == '\0') continue;    // Verifica se algo foi digitado
+
         int argi = 0;
         char *token = strtok(cmd, " ");
 
@@ -122,8 +126,11 @@ int main()
         }
         else if(!strcmp(args[0], "list")){
             // Código para exibir todos os estudantes da fila.
-            // TODO: DEVE SER POR ORDEM ALFABÉTICA --------------------------------------------------------------------------
-            printf("Fila atual de estudante:\n");
+            
+            // Função para organizar a lista em ordem alfabética.
+            sort_alphabetically(&student_queue);
+
+            printf("Fila atual de estudante (ordem alfabética):\n");
             student_node_t* node_c = student_queue.init;
             while(node_c != NULL)
             {
@@ -138,7 +145,7 @@ int main()
             // Verifica se o argumento não é vazios.
             if(!args[1])
             {
-                printf("Erro: faltam argumentos para o comando 'add'\n");
+                printf("Erro: faltam argumentos para o comando 'remove'\n");
                 clean_args(args);
                 continue;
             }
