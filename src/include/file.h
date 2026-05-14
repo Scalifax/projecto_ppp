@@ -7,5 +7,6 @@
 #define FILEPATH "db/users.txt"
 
 void load_db(student_queue_t* q);
+void save_db(student_queue_t* q);
 
 #endif
