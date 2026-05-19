@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -O2
 
-SRC = src/main.c src/file.c
+SRC = src/main.c src/file.c src/queue.c
 OUT = bin/main
 
 all: $(OUT)

@@ -20,8 +20,8 @@ typedef struct student_t {
     char name[100];
     char birth[20];
     char course[20];
-    int year;
-    int number;
+    char number[11];
+    char year;
     float balance;
     purchase_node_t *purchases;
 } student_t;
