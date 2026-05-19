@@ -5,10 +5,20 @@
 #include "include/file.h"
 #include "include/queue.h"
 
+#define DEBUG    0
 #define MAX_ARGS 10
 
 student_queue_t student_queue;
 
+// Função de Debug:
+void print_debug()
+{
+    printf("    > DEBUG: init: %p  | name:%s\n", student_queue.init, student_queue.init->student.name);
+    printf("    > DEBUG: end:  %p  | name:%s\n", student_queue.end, student_queue.end->student.name);
+    printf("    > DEBUG: size: %ld\n", student_queue.size);
+}
+
+// Funções para converter uma string ("10.99") em float (10.99):
 void str_to_float(const char *str, float *result)
 {
     float num = 0.0f;
@@ -59,6 +69,7 @@ void str_to_float(const char *str, float *result)
     *result = num * sign;
 }
 
+// Função para limpar os argumentos da linha de comando:
 void clean_args(char** args)
 {
     for(int i = 0; i < MAX_ARGS; i++)
@@ -128,13 +139,13 @@ int main()
             // Código para exibir todos os estudantes da fila.
             
             // Função para organizar a lista em ordem alfabética.
-            sort_alphabetically(&student_queue);
+            sort_student_alphabetically(&student_queue);
 
             printf("Fila atual de estudante (ordem alfabética):\n");
             student_node_t* node_c = student_queue.init;
             while(node_c != NULL)
             {
-                printf("%s %s %s %s %c %.2f\n", node_c->student.name, node_c->student.birth,
+                printf(" * %s %s %s %s %c %.2f\n", node_c->student.name, node_c->student.birth,
                     node_c->student.course, node_c->student.number, node_c->student.year, node_c->student.balance);
                 node_c = node_c->prox;
             }
@@ -161,11 +172,14 @@ int main()
         }
         else if(!strcmp(args[0], "exit")){
             printf("Encerrando o programa.\n");
+            save_db(&student_queue);
             break;
         }
         else{
             printf("Comando desconhecido.\n");
         }
+
+        if(DEBUG) print_debug();
 
         // Limpa os argumentos para o próximo loop.
         clean_args(args);

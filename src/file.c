@@ -24,7 +24,7 @@ void save_db(student_queue_t* q)
     while(node_c!=NULL)
     {
         student_t s=node_c->student;
-        fprintf(f, "%s %s %s %s %c %.2f\n", s.name, s.birth, s.course, s.number, s.year, s.balance);
+        fprintf(f, "%s %s %s %s %c %f\n", s.name, s.birth, s.course, s.number, s.year, s.balance);
         node_c=node_c->prox;
     }
     fclose(f);

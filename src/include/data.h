@@ -5,7 +5,7 @@
 
 // Compras (valor, descrição, data):
 typedef struct purchase_t {
-    int value;
+    float value;
     char description[100];
     char date[20];
 } purchase_t;

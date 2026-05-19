@@ -6,6 +6,6 @@
 
 void new_student(student_queue_t* q, student_t s);
 void remove_student(student_queue_t* q, const char* student_name);
-void sort_alphabetically(student_queue_t* q);
+void sort_student_alphabetically(student_queue_t* q);
 
 #endif

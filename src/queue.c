@@ -53,10 +53,14 @@ void remove_student(student_queue_t* q, const char* student_name)
     }
 
     // Remove o elemento.
-    if(node_c == q->init){
+    if (q->init == q->end){
+        q->init = NULL;
+        q->end = NULL;
+    }
+    else if (node_c == q->init){
         q->init = node_c->prox;
     }
-    else if(node_c == q->end){
+    else if (node_c == q->end){
         node_o->prox = NULL;
         q->end = node_o;
     }
@@ -69,7 +73,7 @@ void remove_student(student_queue_t* q, const char* student_name)
     free(node_c);
 }
 
-void sort_alphabetically(student_queue_t* q) 
+void sort_student_alphabetically(student_queue_t* q) 
 {
     if(q == NULL || q->init == NULL || q->init->prox == NULL) return;
 
