@@ -2,6 +2,7 @@
 #define __FILE_H__
 
 #include <stdio.h>
+#include "queue.h"
 #include "data.h"
 
 #define FILEPATH "db/users.txt"
