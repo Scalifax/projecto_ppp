@@ -13,3 +13,23 @@ void load_db(student_queue_t* q)
 
     fclose(f);
 }
+
+void save_db(student_queue_t* q)
+{
+    FILE *f=fopen(FILEPATH, "w");
+    if(f == NULL) return;
+
+    student_node_t* node_c=q->init;
+
+    while(node_c!=NULL)
+    {
+        student_t s=node_c->student;
+        fprintf(f, "%s %s %s %s %c %.2f\n", s.name, s.birth, s.course, s.number, s.year, s.balance);
+        node_c=node_c->prox;
+    }
+    fclose(f);
+}
+
+
+
+   
