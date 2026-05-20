@@ -81,6 +81,9 @@ int main()
     // Carrega os estudantes que estão no banco de dados.
     load_db(&student_queue);
 
+    // Carrega as compras dos estudantes que estão no ficheiro.
+    load_purchases(&student_queue);
+
     char cmd[128];          // Buffer para guardar o comando digitado.
     char* args[MAX_ARGS];   // Array de ponteiros para os argumentos do comando.
     printf("Comandos disponíveis (add, list, remove, purchase, deposit, exit)\n");
@@ -91,7 +94,7 @@ int main()
         // Lê o comando digitado pelo utilizador.
         printf("> ");
         if(fgets(cmd, sizeof(cmd), stdin) == NULL){
-            printf("Erro ao ler comando.\n");
+            printf("Error: falha ao ler comando.\n");
             return 1;
         }
         cmd[strcspn(cmd, "\n")] = '\0'; // Remove o '\n' do fgets
@@ -112,12 +115,11 @@ int main()
         // Parse do comando.
         if(!strcmp(args[0], "add")){
             // Código para criar um novo estudante na fila.
-            // Cria uma nova estrutra de estudante e copia os argumentos.
 
             // Verifica se os argumentos não são vazios.
             if(!args[1] || !args[2] || !args[3] || !args[4] || !args[5] || !args[6])
             {
-                printf("Erro: faltam argumentos para o comando 'add'\n");
+                printf("Error: faltam argumentos para o comando 'add'\n");
                 clean_args(args);
                 continue;
             }
@@ -153,10 +155,10 @@ int main()
         else if(!strcmp(args[0], "remove")){
             // Código para remover um estudante da fila
             
-            // Verifica se o argumento não é vazios.
+            // Verifica se o argumento não é vazio.
             if(!args[1])
             {
-                printf("Erro: faltam argumentos para o comando 'remove'\n");
+                printf("Error: faltam argumentos para o comando 'remove'\n");
                 clean_args(args);
                 continue;
             }
@@ -165,13 +167,52 @@ int main()
             remove_student(&student_queue, args[1]);
         }
         else if(!strcmp(args[0], "purchase")){
-            // TODO
+            // Código para realizar uma compra para um estudante.
+
+            // Verifica se os argumentos não são vazios.
+            if(!args[1] || !args[2] || !args[3] || !args[4])
+            {
+                printf("Error: faltam argumentos para o comando 'purchase'\n");
+                clean_args(args);
+                continue;
+            }
+
+            purchase_t purchase;
+            float f;
+            str_to_float(args[2], &f);
+            purchase.value = f;
+            strcpy(purchase.description, args[3]);
+            strcpy(purchase.date, args[4]);
+
+            // Chama a função para criar a nova compra.
+            new_student_purchase(&student_queue, args[1], purchase, true);
         }
         else if(!strcmp(args[0], "deposit")){
-            // TODO
+            // Código para realizar um depósito para um estudante.
+
+            // Verifica se os argumentos não são vazios.
+            if(!args[1] || !args[2] || !args[3])
+            {
+                printf("Error: faltam argumentos para o comando 'purchase'\n");
+                clean_args(args);
+                continue;
+            }
+
+            purchase_t purchase;
+            float f;
+            str_to_float(args[2], &f);
+            purchase.value = -f;
+            strcpy(purchase.description, "depósito.");
+            strcpy(purchase.date, args[3]);
+
+            // Chama a função para criar a nova compra (no caso de ser um depósisto, é uma compra com valor negativo).
+            new_student_purchase(&student_queue, args[1], purchase, true);
         }
         else if(!strcmp(args[0], "exit")){
+            // Sequência de eventos para encerrar o programa.
+
             printf("Encerrando o programa.\n");
+            save_purchases(&student_queue);
             save_db(&student_queue);
             break;
         }

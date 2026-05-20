@@ -1,0 +1,3 @@
+julia -15.000000 depósito. 21/05/2026
+victor 10.000000 despesas 21/05/2026
+victor -85.000000 depósito. 20/05/2026

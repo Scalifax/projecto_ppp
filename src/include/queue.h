@@ -2,10 +2,12 @@
 #define __QUEUE_H__
 
 #include <stdio.h>
+#include <stdbool.h>
 #include "data.h"
 
 void new_student(student_queue_t* q, student_t s);
 void remove_student(student_queue_t* q, const char* student_name);
 void sort_student_alphabetically(student_queue_t* q);
+void new_student_purchase(student_queue_t* q, const char* student_name, purchase_t p, bool op_flag);
 
 #endif
